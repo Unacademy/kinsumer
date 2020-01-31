@@ -126,6 +126,10 @@ func (k *Kinsumer) consume(shardID string) {
 
 	sequenceNumber := checkpointer.sequenceNumber
 
+	if k.startFromLatest == true {
+		sequenceNumber = kinesis.ShardIteratorTypeLatest
+	}
+
 	// finished means we have reached the end of the shard but haven't necessarily processed/committed everything
 	finished := false
 	// Make sure we release the shard when we are done.
